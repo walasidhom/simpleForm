@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
 export default function Task(props) {
-    
-    return (
-            <div key={props.id}>
-                <p>{props.text}</p>
-                <button onClick={() => props.handleDelete(props.id)}>Delete</button>
-                <button>Finish</button>
-            </div>
-        );
+  return (
+    <div key={props.task.id}>
+      <p>{props.task.text}</p>
+      <button onClick={() => props.handleDelete(props.task.id)}>Delete</button>
+      <button>Finish</button>
+    </div>
+  );
 }
