@@ -1,12 +1,19 @@
 import React from "react";
 import Task from "./Task";
 
-const TaskList = ({ taskList, handleDelete }) => {
+const TaskList = ({ taskList, handleDelete, handleFinish }) => {
+  console.log(taskList);
+
   return (
     <div>
       <ul>
         {taskList.map((task, key) => (
-          <Task key={key} task={task} handleDelete={handleDelete} />
+          <Task
+            key={key}
+            task={task}
+            handleDelete={handleDelete}
+            handleFinish={handleFinish}
+          />
         ))}
       </ul>
     </div>
