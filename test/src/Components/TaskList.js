@@ -1,19 +1,23 @@
-import React from 'react'
-import Task from './Task';
+import React from "react";
+import Task from "./Task";
 
-const TaskList = ({taskList , handleDelete}) => {
-        
+const TaskList = ({ taskList, handleDelete, handleFinish }) => {
+  console.log(taskList);
 
   return (
-      <div>
-          <ul>
-              {taskList.map((e, key) =>
-              <Task key={key}
-                  text={e.text}
-                  handleDelete={handleDelete} />)}
-          </ul>
+    <div>
+      <ul>
+        {taskList.map((task, key) => (
+          <Task
+            key={key}
+            task={task}
+            handleDelete={handleDelete}
+            handleFinish={handleFinish}
+          />
+        ))}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default TaskList
+export default TaskList;
