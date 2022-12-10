@@ -1,7 +1,7 @@
 import React from 'react'
 import Task from './Task';
 
-const TaskList = ({taskList , handleDelete}) => {
+const TaskList = ({taskList , handleDelete , handleFinish}) => {
         
 
   return (
@@ -9,8 +9,9 @@ const TaskList = ({taskList , handleDelete}) => {
           <ul>
               {taskList.map((e, key) =>
               <Task key={key}
-                  text={e.text}
-                  handleDelete={handleDelete} />)}
+                  task={e}
+                  handleDelete={handleDelete}
+                  handleFinish={handleFinish}/>)}
           </ul>
     </div>
   )
