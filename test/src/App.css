@@ -70,3 +70,8 @@ label {
     text-transform: uppercase;
     margin-left: 60px;
 }
+
+.done {
+    text-decoration: line-through;
+    color: red;
+}
