@@ -1,0 +1,22 @@
+{
+  "name": "simpleform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nacer-MEDIOUNI/simpleForm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nacer-MEDIOUNI/simpleForm/issues"
+  },
+  "homepage": "https://github.com/Nacer-MEDIOUNI/simpleForm#readme"
+}

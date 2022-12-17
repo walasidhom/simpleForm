@@ -2,7 +2,7 @@ import React from "react";
 import "../task.css";
 
 export default function Task(props) {
-  console.log(props);
+  
   return (
     <div key={props.task.id}>
       <p className={props.task.completed && "done"}>{props.task.text}</p>
