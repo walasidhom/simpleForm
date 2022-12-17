@@ -1,38 +1,37 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
-class TaskAdd extends Component {
-  state = { newId: Math.random(), textAdded: "" };
-  handleChange = (event) => {
-    this.setState({ textAdded: event.target.value });
+const TaskAdd = (props) => {
+  const [textAdded, setTextAdded] = useState("");
+
+  const handleChange = (event) => {
+    setTextAdded(event.target.value);
   };
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     event.target.reset();
   };
 
-  handleAdd = () => {
-    return this.props.handleAdd({
-      id: this.state.newId,
-      text: this.state.textAdded,
+  const handleAdd = () => {
+    return props.handleAdd({
+      id: Math.random(),
+      text: textAdded,
     });
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <input
-            type="task"
-            placeholder="Add your task here"
-            onChange={this.handleChange}
-          />
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          type="task"
+          placeholder="Add your task here"
+          onChange={handleChange}
+        />
 
-          <button onClick={this.handleAdd}>add task</button>
-        </div>
-      </form>
-    );
-  }
-}
+        <button onClick={handleAdd}>add task</button>
+      </div>
+    </form>
+  );
+};
 
 export default TaskAdd;

@@ -2,8 +2,6 @@ import React from "react";
 import Task from "./Task";
 
 const TaskList = ({ taskList, handleDelete, handleFinish }) => {
-  console.log(taskList);
-
   return (
     <div>
       <ul>

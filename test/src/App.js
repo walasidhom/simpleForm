@@ -1,49 +1,71 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
+import { Counter } from "./Components/Counter";
 import TaskAdd from "./Components/TaskAdd";
 import TaskList from "./Components/TaskList";
 
-class App extends Component {
-  state = {
-    Tasks: [
-      { id: 1, text: "Learn React", completed: false },
-      { id: 2, text: "Finish my Homeworks", completed: false },
-      { id: 3, text: "watch the match", completed: false },
-    ],
+const App = () => {
+  const Tasks = [
+    { id: 1, text: "Learn React", completed: false },
+    { id: 2, text: "Finish my Homeworks", completed: false },
+    { id: 3, text: "watch the match", completed: false },
+  ];
+
+  const [TasksToDo, setTasksToDo] = useState(Tasks);
+  const [showCounter, setShowCounter] = useState(true);
+
+  const [tasksCount, setTasksCount] = useState(TasksToDo.length);
+
+  console.log(TasksToDo.length);
+
+  useEffect(() => {
+    setTasksCount(TasksToDo.length + 2);
+  }, [TasksToDo.length]);
+
+  const handleDelete = (id) => {
+    setTasksToDo(TasksToDo.filter((task) => task.id !== id));
   };
 
-  handleDelete = (id) => {
-    this.setState({
-      Tasks: this.state.Tasks.filter((task) => task.id !== id),
-    });
+  const handleAdd = (task) => {
+    setTasksToDo([...TasksToDo, task]);
   };
 
-  handleAdd = (task) => {
-    this.setState({ Tasks: [...this.state.Tasks, task] });
-  };
-
-  handleFinish = (id) => {
-    this.setState({
-      Tasks: this.state.Tasks.map((task) => {
+  const handleFinish = (id) => {
+    setTasksToDo(
+      TasksToDo.map((task) => {
         if (task.id === id) {
           task.completed = !task.completed;
         }
         return task;
-      }),
-    });
+      })
+    );
   };
 
-  render() {
-    return (
+  const handleCounter = () => {
+    setShowCounter(!showCounter);
+  };
+
+  return (
+    <>
       <div>
+        <h6>We have {TasksToDo.length} tasks to do </h6>
+        <h6>
+          We are here using side effect by adding two to the total tasks , so
+          the the new state will be {tasksCount}
+        </h6>
         <TaskList
-          taskList={this.state.Tasks}
-          handleDelete={this.handleDelete}
-          handleFinish={this.handleFinish}
+          taskList={TasksToDo}
+          handleDelete={handleDelete}
+          handleFinish={handleFinish}
         />
-        <TaskAdd handleAdd={this.handleAdd} />
+        <TaskAdd handleAdd={handleAdd} />
       </div>
-    );
-  }
-}
+
+      <button onClick={handleCounter}>
+        {showCounter ? "Hide counter" : "Show counter"}
+      </button>
+      {showCounter && <Counter />}
+    </>
+  );
+};
 
 export default App;
