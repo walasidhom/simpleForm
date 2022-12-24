@@ -1,17 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Task from "./Task";
 
-const TaskList = ({ taskList, handleDelete, handleFinish }) => {
+const TaskList = () => {
+  const tasks = useSelector((store) => store.todoReducer.taskList);
+
   return (
     <div>
       <ul>
-        {taskList.map((task, key) => (
-          <Task
-            key={key}
-            task={task}
-            handleDelete={handleDelete}
-            handleFinish={handleFinish}
-          />
+        {tasks.map((task, key) => (
+          <Task key={key} task={task} />
         ))}
       </ul>
     </div>
