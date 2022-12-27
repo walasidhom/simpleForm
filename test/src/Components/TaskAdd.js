@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../JS/actions/todoActions';
 
 const TaskAdd =(props) => {
   
   const [textAdded, setTextAdded] = useState("");
+
+  const dispatch = useDispatch();
   
   const handleChange = (event) => {
     setTextAdded( event.target.value) };
@@ -14,10 +18,7 @@ const TaskAdd =(props) => {
   };
 
   const handleAdd = () => {
-    return props.handleAdd({
-      id: Math.random(),
-      text: textAdded,
-    });
+    dispatch ( addTodo({ id: Math.random(), text: textAdded, completed : false}));
   };
 
   return (

@@ -1,46 +1,52 @@
-import { useState } from "react";
-import TaskAdd from "./Components/TaskAdd";
-import TaskList from "./Components/TaskList";
+import { useEffect, useState } from 'react'
+import { Route, Routes } from "react-router-dom";
+import Navigation from "./Navigation";
+import Checkpoints from "./Pages/Checkpoints";
+import Home from "./Pages/Home";
+import One2Ones from "./Pages/One2Ones";
+import ToDoApp from "./Pages/ToDoApp";
+import Error from "./Error";
+import Axios from 'axios'
 
-const App =() => {
-  const Tasks= [
-    { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Finish my Homeworks", completed: false },
-    { id: 3, text: "watch the match", completed: false }
-  ];
-  
-  const[TasksToDo, setTasksToDo] = useState(Tasks);
-
-  const handleDelete = (id) => {
-    setTasksToDo(TasksToDo.filter((task) => task.id !== id))
+const App = () => {
+  const [users, setUsers] = useState([]);
+  const getUsers = () => {
+    Axios.get('https://jsonplaceholder.typicode.com/users')
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     
   };
-
-  const handleAdd = (task) => {
-    setTasksToDo(...TasksToDo, task);
-  };
-
-  const handleFinish = (id) => {
-    setTasksToDo(
-      TasksToDo.map((task) => {
-        if (task.id === id) {
-          task.completed = !task.completed;
-        }
-        return task;
-      }),
-    );
-  };
+  useEffect(() => getUsers() , [])
+  
 
   
-    return (
-      <div>
-        <TaskList
-          taskList={TasksToDo}
-          handleDelete={handleDelete}
-          handleFinish={handleFinish}
-        />
-        <TaskAdd handleAdd={handleAdd} />
+  return (
+    <>
+      <Navigation />
+      <div
+          style={{
+            margin: "2rem",
+            display: "grid",
+            alignContent: "center",
+            alignItems: "center",
+            justifyItems: "center",
+          }}
+        >
+          <h6>Welcome to our Loki's App</h6>
+          <Routes>
+            <Route path="/*" element={<Error />} />
+          <Route path="/home" element={<Home userList={ users } />} />
+            <Route path="/toDoApp" element={<ToDoApp />} />
+            <Route path="/checkpoints" element={<Checkpoints />} />
+            <Route path="/one2ones" element={<One2Ones />} />
+          </Routes>
       </div>
+    </>
+      
     );
   }
 
