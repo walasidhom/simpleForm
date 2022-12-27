@@ -1,69 +1,58 @@
+import Navigation from "./Components/Navigation";
+import ToDoApp from "./Pages/ToDoApp";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Checkpoints from "./Pages/Checkpoints";
+import One2Ones from "./Pages/One2Ones";
+import Error from "./Components/Error";
+import Axios from "axios";
 import { useEffect, useState } from "react";
-import { Counter } from "./Components/Counter";
-import TaskAdd from "./Components/TaskAdd";
-import TaskList from "./Components/TaskList";
 
 const App = () => {
-  const Tasks = [
-    { id: 1, text: "Learn React", completed: false },
-    { id: 2, text: "Finish my Homeworks", completed: false },
-    { id: 3, text: "watch the match", completed: false },
-  ];
+  const [users, setUsers] = useState([]);
 
-  const [TasksToDo, setTasksToDo] = useState(Tasks);
-  const [showCounter, setShowCounter] = useState(true);
+  const getUsers = () => {
+    Axios.get("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        setUsers(res.data);
+        // console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-  const [tasksCount, setTasksCount] = useState(TasksToDo.length);
-
-  console.log(TasksToDo.length);
+  // fetch("https://jsonplaceholder.typicode.com/users")
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data));
 
   useEffect(() => {
-    setTasksCount(TasksToDo.length + 2);
-  }, [TasksToDo.length]);
+    getUsers();
+  }, []);
 
-  const handleDelete = (id) => {
-    setTasksToDo(TasksToDo.filter((task) => task.id !== id));
-  };
-
-  const handleAdd = (task) => {
-    setTasksToDo([...TasksToDo, task]);
-  };
-
-  const handleFinish = (id) => {
-    setTasksToDo(
-      TasksToDo.map((task) => {
-        if (task.id === id) {
-          task.completed = !task.completed;
-        }
-        return task;
-      })
-    );
-  };
-
-  const handleCounter = () => {
-    setShowCounter(!showCounter);
-  };
+  console.log(users);
 
   return (
     <>
-      <div>
-        <h6>We have {TasksToDo.length} tasks to do </h6>
-        <h6>
-          We are here using side effect by adding two to the total tasks , so
-          the the new state will be {tasksCount}
-        </h6>
-        <TaskList
-          taskList={TasksToDo}
-          handleDelete={handleDelete}
-          handleFinish={handleFinish}
-        />
-        <TaskAdd handleAdd={handleAdd} />
+      <Navigation />
+      <div
+        style={{
+          margin: "2rem",
+          display: "grid",
+          alignContent: "center",
+          alignItems: "center",
+          justifyItems: "center",
+        }}
+      >
+        <h6>Welcome to our Loki's App</h6>
+        <Routes>
+          <Route path="/*" element={<Error />} />
+          <Route path="/home" element={<Home userList={users} />} />
+          <Route path="/toDoApp" element={<ToDoApp />} />
+          <Route path="/checkpoints" element={<Checkpoints />} />
+          <Route path="/one2ones" element={<One2Ones />} />
+        </Routes>
       </div>
-
-      <button onClick={handleCounter}>
-        {showCounter ? "Hide counter" : "Show counter"}
-      </button>
-      {showCounter && <Counter />}
     </>
   );
 };
